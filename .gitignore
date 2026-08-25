@@ -1,0 +1,22 @@
+.DS_Store
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.log
+
+# Generated data and experiment outputs
+data/
+experiments/results/*
+!experiments/results/.gitkeep
+artifacts/*.onnx
+
+# DuckDB build artifacts (inside submodule)
+duckdb/build/
+
+# Backup from migration
+../duckdb-learned-ce.old/

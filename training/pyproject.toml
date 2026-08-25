@@ -1,0 +1,22 @@
+[project]
+name = "learned-ce"
+version = "0.1.0"
+description = "Training and benchmark tooling for DuckDB learned cardinality estimation"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.26",
+  "pandas>=2.1",
+  "pyarrow>=14.0",
+  "scikit-learn>=1.4",
+  "xgboost>=2.0",
+  "onnx>=1.15",
+  "onnxruntime>=1.17",
+]
+
+[project.scripts]
+learned-ce-train = "learned_ce.train:main"
+learned-ce-validate-onnx = "learned_ce.validate_onnx:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["learned_ce*"]

@@ -1,0 +1,29 @@
+name: Learned CE
+
+on:
+  push:
+    paths:
+      - 'integration/**'
+      - 'scripts/**'
+      - 'training/**'
+      - 'benchmarks/**'
+      - '.github/workflows/learned-ce.yml'
+  pull_request:
+    paths:
+      - 'integration/**'
+      - 'scripts/**'
+      - 'training/**'
+      - 'benchmarks/**'
+      - '.github/workflows/learned-ce.yml'
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y build-essential cmake ninja-build rsync
+      - name: Apply integration and build
+        run: JOBS=2 RUN_TESTS=1 ./scripts/build.sh
