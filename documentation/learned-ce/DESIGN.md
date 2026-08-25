@@ -2,6 +2,12 @@
 
 Experimental integration of an XGBoost/ONNX learned cardinality estimator into DuckDB's join-order optimizer.
 
+## Repository model
+
+- **Project repo:** this repository (`training/`, `integration/`, `benchmarks/`, etc.)
+- **DuckDB:** pristine submodule at `duckdb/` (pinned commit, never committed with local edits)
+- **Integration:** `integration/` overlay + patches applied locally via `./scripts/apply_integration.sh`
+
 ## Upstream pin
 
 ```text
