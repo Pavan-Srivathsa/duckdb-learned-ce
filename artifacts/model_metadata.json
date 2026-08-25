@@ -1,5 +1,5 @@
 {
-  "model_version": "v0-scaffold",
+  "model_version": "v1",
   "feature_schema_version": 1,
   "target": "log1p_cardinality",
   "features": [
@@ -18,5 +18,9 @@
     "has_left_stats",
     "has_right_stats"
   ],
-  "training_benchmarks": []
+  "training_benchmarks": [
+    "tpch"
+  ],
+  "dataset": "../data/training.parquet",
+  "booster_path": "../artifacts/model.xgb.json"
 }

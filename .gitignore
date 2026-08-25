@@ -14,9 +14,10 @@ data/
 experiments/results/*
 !experiments/results/.gitkeep
 artifacts/*.onnx
+artifacts/model.xgb.json
+artifacts/metrics.json
+artifacts/feature_schema.json
+data/training*.parquet
 
 # DuckDB build artifacts (inside submodule)
 duckdb/build/
-
-# Backup from migration
-../duckdb-learned-ce.old/

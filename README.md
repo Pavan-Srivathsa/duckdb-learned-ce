@@ -28,10 +28,25 @@ scripts/                # apply, build, reset helpers
 git submodule update --init duckdb
 make -f learned-ce.mk apply
 make -f learned-ce.mk build
+```
 
-pip install duckdb pandas pyarrow
+### Python ML pipeline
+
+```bash
+python3 -m venv .venv && source .venv/bin/activate
+pip install numpy pandas pyarrow scikit-learn xgboost onnxmltools onnx onnxruntime duckdb pytest
+# macOS only: brew install libomp
+
+make -f learned-ce.mk pipeline   # collect data → baseline → train → ONNX parity
+```
+
+Individual steps:
+
+```bash
 make -f learned-ce.mk generate-data
 make -f learned-ce.mk baseline-analysis
+make -f learned-ce.mk train
+make -f learned-ce.mk validate-onnx
 ```
 
 Reset the submodule to pristine upstream:

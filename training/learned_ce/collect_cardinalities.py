@@ -23,13 +23,17 @@ def ensure_tpch(con: duckdb.DuckDBPyConnection, scale_factor: float) -> None:
 
 
 def extract_estimated_cardinality(explain_text: str) -> float:
-    """Best-effort parse of estimated rows from EXPLAIN output."""
+    """Best-effort parse of estimated rows from DuckDB EXPLAIN physical plan."""
+    tilde_rows = re.findall(r"~\s*([0-9,]+)\s*rows", explain_text, flags=re.IGNORECASE)
+    if tilde_rows:
+        values = [float(value.replace(",", "")) for value in tilde_rows]
+        return max(values)
+
     matches = re.findall(r"Cardinality:\s*([0-9,]+)", explain_text)
     if not matches:
         matches = re.findall(r"Estimated Cardinality:\s*([0-9,]+)", explain_text)
     if not matches:
         return 0.0
-    # Use the largest intermediate estimate as a coarse native proxy.
     values = [float(m.replace(",", "")) for m in matches]
     return max(values)
 

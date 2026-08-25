@@ -27,3 +27,18 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y build-essential cmake ninja-build rsync
       - name: Apply integration and build
         run: JOBS=2 RUN_TESTS=1 ./scripts/build.sh
+
+  python-pipeline:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Python dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install numpy pandas pyarrow scikit-learn xgboost onnxmltools onnx onnxruntime duckdb pytest
+      - name: Run ML pipeline smoke test
+        run: |
+          make -f learned-ce.mk generate-data
+          make -f learned-ce.mk baseline-analysis
+          make -f learned-ce.mk train
+          make -f learned-ce.mk validate-onnx

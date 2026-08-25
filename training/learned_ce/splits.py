@@ -22,8 +22,11 @@ def assign_template_splits(
     rng = random.Random(seed)
     rng.shuffle(unique_templates)
 
-    train_cut = int(len(unique_templates) * train_ratio)
-    val_cut = train_cut + int(len(unique_templates) * val_ratio)
+    n = len(unique_templates)
+    train_cut = max(1, int(n * train_ratio))
+    val_cut = max(train_cut + 1, train_cut + max(1, int(n * val_ratio)))
+    if val_cut >= n:
+        val_cut = n - 1
 
     split_map: dict[str, str] = {}
     for idx, template in enumerate(unique_templates):
