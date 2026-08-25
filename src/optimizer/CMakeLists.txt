@@ -1,5 +1,6 @@
 add_subdirectory(compressed_materialization)
 add_subdirectory(join_order)
+add_subdirectory(learned_ce)
 add_subdirectory(matcher)
 add_subdirectory(pullup)
 add_subdirectory(pushdown)

@@ -46,6 +46,14 @@ For development, DuckDB requires [CMake](https://cmake.org), Python 3 and a `C++
 
 Please also refer to our [Build Guide](https://duckdb.org/docs/current/dev/building/overview) and [Contribution Guide](CONTRIBUTING.md).
 
+## Learned Cardinality Estimation (Experimental)
+
+> Query optimizers rely on cardinality estimates to choose execution plans. This fork integrates an experimental learned cardinality estimator into DuckDB's C++ join optimizer, with ONNX-exported XGBoost inference and native-estimator fallback.
+
+- **Upstream pin:** `95697fa642c7ccd4514284ef0d7cdd2e82667d48`
+- **Docs:** [documentation/learned-ce/DESIGN.md](documentation/learned-ce/DESIGN.md), [documentation/learned-ce/ARCHITECTURE.md](documentation/learned-ce/ARCHITECTURE.md)
+- **Build/test:** `make -f learned-ce.mk build && make -f learned-ce.mk test-learned-ce`
+
 ## Support
 
 See the [Support Options](https://ducklabs.com/support/) page and the dedicated [`endoflife.date`](https://endoflife.date/duckdb) page.

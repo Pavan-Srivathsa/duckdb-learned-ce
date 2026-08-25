@@ -14,6 +14,7 @@
 namespace duckdb {
 
 class FilterInfo;
+class ClientContext;
 class JoinPredicateModel;
 struct CardinalityEstimatorState;
 struct CompositeJoinPairStats;
@@ -26,7 +27,8 @@ struct Subgraph2Denominator;
 class CardinalityEstimator {
 public:
 	static constexpr double DEFAULT_SEMI_ANTI_SELECTIVITY = 5;
-	CardinalityEstimator(JoinRelationSetManager &set_manager, const JoinPredicateModel &predicate_model);
+	CardinalityEstimator(JoinRelationSetManager &set_manager, const JoinPredicateModel &predicate_model,
+	                     optional_ptr<ClientContext> context = nullptr);
 	~CardinalityEstimator();
 
 public:
@@ -97,6 +99,7 @@ private:
 	unique_ptr<CardinalityEstimatorState> state;
 	JoinRelationSetManager &set_manager;
 	const JoinPredicateModel &predicate_model;
+	optional_ptr<ClientContext> context;
 };
 
 } // namespace duckdb

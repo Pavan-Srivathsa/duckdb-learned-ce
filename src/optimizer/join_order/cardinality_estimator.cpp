@@ -6,6 +6,7 @@
 #include "duckdb/function/table/table_scan.hpp"
 #include "duckdb/optimizer/join_order/join_node.hpp"
 #include "duckdb/optimizer/join_order/query_graph_manager.hpp"
+#include "duckdb/optimizer/learned_ce/learned_ce_bridge.hpp"
 #include "duckdb/optimizer/relation_statistics/relation_statistics_helper.hpp"
 #include "duckdb/planner/operator/logical_comparison_join.hpp"
 #include "duckdb/planner/expression/bound_comparison_expression.hpp"
@@ -191,8 +192,10 @@ struct CardinalityEstimatorState {
 };
 
 CardinalityEstimator::CardinalityEstimator(JoinRelationSetManager &set_manager,
-                                           const JoinPredicateModel &predicate_model)
-    : state(make_uniq<CardinalityEstimatorState>()), set_manager(set_manager), predicate_model(predicate_model) {
+                                           const JoinPredicateModel &predicate_model,
+                                           optional_ptr<ClientContext> context_p)
+    : state(make_uniq<CardinalityEstimatorState>()), set_manager(set_manager), predicate_model(predicate_model),
+      context(context_p) {
 }
 
 CardinalityEstimator::~CardinalityEstimator() {
@@ -908,7 +911,8 @@ double CardinalityEstimator::EstimateCardinalityWithSet(JoinRelationSet &new_set
 		result = numerator / denom.denominator;
 		state->relation_set_2_cardinality[new_set] = CardinalityHelper(result);
 	}
-	return ApplyOrFilterSelectivities(new_set, result);
+	result = ApplyOrFilterSelectivities(new_set, result);
+	return LearnedCEBridge::Apply(context, new_set, result, predicate_model, state->relation_stats);
 }
 
 double CardinalityEstimator::ApplyOrFilterSelectivities(JoinRelationSet &new_set, double cardinality) const {

@@ -1,0 +1,35 @@
+name: Learned CE
+
+on:
+  push:
+    paths:
+      - 'src/optimizer/learned_ce/**'
+      - 'src/include/duckdb/optimizer/learned_ce/**'
+      - 'src/optimizer/join_order/cardinality_estimator.cpp'
+      - 'src/common/settings.json'
+      - 'test/optimizer/learned_ce.cpp'
+      - 'training/**'
+      - '.github/workflows/learned-ce.yml'
+  pull_request:
+    paths:
+      - 'src/optimizer/learned_ce/**'
+      - 'src/include/duckdb/optimizer/learned_ce/**'
+      - 'src/optimizer/join_order/cardinality_estimator.cpp'
+      - 'src/common/settings.json'
+      - 'test/optimizer/learned_ce.cpp'
+      - 'training/**'
+      - '.github/workflows/learned-ce.yml'
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y build-essential cmake ninja-build
+      - name: Build DuckDB
+        run: |
+          cmake -DCMAKE_BUILD_TYPE=Release -G Ninja -B build -S .
+          cmake --build build --parallel
+      - name: Run learned CE unit tests
+        run: ./build/test/unittest "[learned_ce]"

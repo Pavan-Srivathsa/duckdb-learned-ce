@@ -971,6 +971,50 @@
         "default_value": "50"
     },
     {
+        "name": "learned_ce_collect_telemetry",
+        "description": "Collect experimental learned cardinality estimation telemetry during query optimization",
+        "type": "BOOLEAN",
+        "default_scope": "local",
+        "default_value": "false"
+    },
+    {
+        "name": "learned_ce_confidence_threshold",
+        "description": "Minimum model confidence required before hybrid/learned modes replace native cardinality estimates",
+        "type": "DOUBLE",
+        "default_scope": "local",
+        "default_value": "0.5",
+        "on_callbacks": [
+            "set"
+        ]
+    },
+    {
+        "name": "learned_ce_enabled",
+        "description": "Enable experimental learned cardinality estimation during join-order optimization",
+        "type": "BOOLEAN",
+        "default_scope": "local",
+        "default_value": "false"
+    },
+    {
+        "name": "learned_ce_mode",
+        "description": "Learned cardinality estimator mode: native, shadow, learned, hybrid, or adaptive",
+        "type": "VARCHAR",
+        "default_scope": "local",
+        "default_value": "native",
+        "on_callbacks": [
+            "set"
+        ]
+    },
+    {
+        "name": "learned_ce_model_path",
+        "description": "Path to the ONNX model artifact used by the learned cardinality estimator",
+        "type": "VARCHAR",
+        "default_scope": "local",
+        "default_value": "",
+        "on_callbacks": [
+            "set"
+        ]
+    },
+    {
         "name": "legacy_disable_null_type",
         "description": "When enabled, prevent the NULL type from leaving the binder (< v2.0 default behavior)",
         "type": "BOOLEAN",

@@ -365,3 +365,9 @@ generated_extension_loader_package_build.cpp
 
 # clangd tidy/format cache
 .cache
+
+# Learned CE generated artifacts
+experiments/results/*
+!experiments/results/.gitkeep
+artifacts/*.onnx
+data/training*.parquet

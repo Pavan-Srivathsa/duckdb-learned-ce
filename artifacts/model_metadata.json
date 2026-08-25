@@ -1,0 +1,22 @@
+{
+  "model_version": "v0-scaffold",
+  "feature_schema_version": 1,
+  "target": "log1p_cardinality",
+  "features": [
+    "log_native_estimate",
+    "log_left_cardinality",
+    "log_right_cardinality",
+    "log_left_ndv",
+    "log_right_ndv",
+    "ndv_ratio",
+    "relation_count",
+    "join_edge_count",
+    "equality_predicate_count",
+    "range_predicate_count",
+    "filter_count",
+    "join_graph_density",
+    "has_left_stats",
+    "has_right_stats"
+  ],
+  "training_benchmarks": []
+}
